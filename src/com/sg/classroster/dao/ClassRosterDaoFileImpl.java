@@ -67,14 +67,14 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
 		return studentFromFile;
 	}
 	
-	private void loadRoster() throws ClassRosterDaoException{
+	private void loadRoster() throws ClassRosterPersistenceException{
 		Scanner scanner;
 		
 		try {
 			// Create Scanner for reading the file
 			scanner = new Scanner(new BufferedReader(new FileReader(ROSTER_FILE)));
 		}catch(FileNotFoundException e) {
-			throw new ClassRosterDaoException("-_- Could not load roster data in memory.", e);
+			throw new ClassRosterPersistenceException("-_- Could not load roster data in memory.", e);
 		}
 		// currentLine hold the most recent line read from the file
 		String currentLine;
@@ -123,12 +123,12 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
 		return studentAsText;
 	}
 	
-	private void writeRoster(Map <String, Student> students) throws ClassRosterDaoException, IOException {
+	private void writeRoster(Map <String, Student> students) throws ClassRosterPersistenceException, IOException {
         PrintWriter scanner;
         try {
             scanner = new PrintWriter(new FileWriter(ROSTER_FILE));
         } catch (FileNotFoundException e) {
-            throw new ClassRosterDaoException( "-_- Could not load roster data into memory.", e);
+            throw new ClassRosterPersistenceException( "-_- Could not load roster data into memory.", e);
         }
         String currentLine;
         for(Map.Entry<String, Student> thisStudent: students.entrySet()){
@@ -138,7 +138,7 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
     }
 	
 	@Override
-	public Student addStudent(String studentId, Student student) throws ClassRosterDaoException, IOException {
+	public Student addStudent(String studentId, Student student) throws ClassRosterPersistenceException, IOException {
 		loadRoster();
 		Student newStudent = students.put(studentId, student);
 		writeRoster(students);
@@ -146,19 +146,19 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
 	}
 	
 	@Override
-	public List<Student> getAllStudents() throws ClassRosterDaoException{
+	public List<Student> getAllStudents() throws ClassRosterPersistenceException{
 		loadRoster();
 		return new ArrayList<Student>(students.values());
 	}
 	
 	@Override
-	public Student getStudent(String studentId) throws ClassRosterDaoException {
+	public Student getStudent(String studentId) throws ClassRosterPersistenceException {
 		loadRoster();
 		return students.get(studentId);
 	}
 	
 	@Override
-	public Student removeStudent(String studentId) throws ClassRosterDaoException, IOException {
+	public Student removeStudent(String studentId) throws ClassRosterPersistenceException, IOException {
 		loadRoster();
 		Student removedStudent = students.remove(studentId);
 		writeRoster(students);

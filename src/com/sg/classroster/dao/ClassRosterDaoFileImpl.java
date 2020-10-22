@@ -23,8 +23,16 @@ import com.sg.classroster.dto.Student;
  */
 public class ClassRosterDaoFileImpl implements ClassRosterDao {
 	
-	public static final String ROSTER_FILE = "roster.txt";
+	public final String ROSTER_FILE;
 	public static final String DELIMITER = "::";
+	
+	public ClassRosterDaoFileImpl() {
+		ROSTER_FILE = "roster.txt";
+	}
+	
+	public ClassRosterDaoFileImpl(String rosterTextFile) {
+		ROSTER_FILE = rosterTextFile;
+	}
 	
 	private Map<String, Student> students = new HashMap<>();
 	

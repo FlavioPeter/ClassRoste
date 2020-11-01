@@ -9,6 +9,9 @@ package com.sg.classroster.ui;
  */
 import java.util.Scanner;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class UserIOConsoleImpl implements UserIO {
 	
 	private static Scanner input = new Scanner(System.in); 

@@ -6,6 +6,9 @@ package com.sg.classroster.controller;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.sg.classroster.dao.ClassRosterDao;
 import com.sg.classroster.dao.ClassRosterPersistenceException;
 import com.sg.classroster.dao.ClassRosterDaoFileImpl;
@@ -21,6 +24,8 @@ import com.sg.classroster.ui.UserIOConsoleImpl;
  * @author Flavio Silva
  *
  */
+
+@Component
 public class ClassRosterController {
 	
 	private ClassRosterView view;
@@ -28,6 +33,7 @@ public class ClassRosterController {
 	// with a declaration for the ClassRosterServiceLayer
 	private ClassRosterServiceLayer service;
 	
+	@Autowired
 	public ClassRosterController(ClassRosterServiceLayer service, ClassRosterView view) {
 		this.service = service;
 		this.view = view;
@@ -91,9 +97,8 @@ public class ClassRosterController {
 	}
 	
 	private void listStudents() throws ClassRosterPersistenceException{
-		String studentId =view.getStudentIdChoice();
-		Student student = service.getStudent(studentId);
-		view.displayStudent(student);
+		List<Student> studentList = service.getAllStudents();
+	    view.displayStudentList(studentList);
 	}
 	
 	private void viewStudent() throws ClassRosterPersistenceException{

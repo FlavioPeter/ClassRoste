@@ -15,13 +15,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.springframework.stereotype.Component;
+
 import com.sg.classroster.dto.Student;
 
 /**
  * @author Flavio Silva
  *
  */
+@Component
 public class ClassRosterDaoFileImpl implements ClassRosterDao {
+	
+	private Map<String, Student> students = new HashMap<>();
 	
 	public final String ROSTER_FILE;
 	public static final String DELIMITER = "::";
@@ -33,8 +38,6 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
 	public ClassRosterDaoFileImpl(String rosterTextFile) {
 		ROSTER_FILE = rosterTextFile;
 	}
-	
-	private Map<String, Student> students = new HashMap<>();
 	
 	private Student unmarshallStudent(String studentAsText) {
 		// studentAsText is expecting a line read in from our file.
@@ -138,7 +141,6 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
         } catch (FileNotFoundException e) {
             throw new ClassRosterPersistenceException( "-_- Could not load roster data into memory.", e);
         }
-        String currentLine;
         for(Map.Entry<String, Student> thisStudent: students.entrySet()){
             scanner.println(marshallStudent(thisStudent.getValue()));
         }

@@ -8,13 +8,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 
+import org.springframework.stereotype.Component;
+
 /**
  * @author Flavio Silva
  *
  */
+@Component
 public class ClassRosterAuditDaoFileImpl implements ClassRosterAuditDao {
 	
-	public static final String AUDIT_FILE = "audit.txt";
+	private static final String AUDIT_FILE = "audit.txt";
 	
 	public void writeAuditEntry(String entry) throws ClassRosterPersistenceException{
 		PrintWriter out;

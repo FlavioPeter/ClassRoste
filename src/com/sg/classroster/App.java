@@ -5,6 +5,8 @@ package com.sg.classroster;
 
 import java.io.IOException;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import com.sg.classroster.controller.ClassRosterController;
 import com.sg.classroster.dao.ClassRosterAuditDao;
 import com.sg.classroster.dao.ClassRosterAuditDaoFileImpl;
@@ -23,6 +25,7 @@ import com.sg.classroster.ui.UserIOConsoleImpl;
 public class App {
 
 	public static void main(String[] args) throws IOException {
+		/*
 		// Instatiate the UserIO implementation
 		UserIO myIo = new UserIOConsoleImpl();
 		// Instatiate the View and wire the UserIO implementation into it
@@ -37,5 +40,15 @@ public class App {
 		ClassRosterController controller = new ClassRosterController(myService, myView);
 		// Kick off the Controller
 		controller.run();
+		*/
+		
+		AnnotationConfigApplicationContext appContext = new AnnotationConfigApplicationContext();
+        appContext.scan("com.sg.classroster");
+        //System.out.println(appContext);
+        
+        appContext.refresh();
+	        
+        ClassRosterController controller = appContext.getBean("classRosterController", ClassRosterController.class);
+	    controller.run();
 	}
 }
